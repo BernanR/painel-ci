@@ -4,8 +4,8 @@ class Usuarios extends CI_Controller {
 
 	public function __construct()
 	{
-		parent::__construct();
-		$this->load->library('sistema');
+		parent::__construct();		
+		init_painel();
 	}
 
 	public function index()
@@ -15,9 +15,10 @@ class Usuarios extends CI_Controller {
 
 	public function login()
 	{	//carrega o módulo usuários e mostra a tela de login
-		$tema['titulo'] = 'Login';
-		$tema['conteudo'] = load_modulo('usuario','login');
-		$this->load->view('painel',$tema);
+		//$tema['titulo'] = 'Login';
+		set_tema('titulo','login');
+		set_tema('conteudo',load_modulo('usuario','login'));
+		load_template();
 	}
 }
 
