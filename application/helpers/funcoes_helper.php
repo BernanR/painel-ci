@@ -43,12 +43,15 @@ function init_painel()
 	$CI =& get_instance();
 	$CI->load->library(array('sistema','session','form_validation','parser'));
 	$CI->load->helper(array('form','url','array','text'));
+	
 	//carregamento do models
+	$CI->load->model('usuarioModel','usuarios');
 
 	set_tema('titulo_padrao','Painel ADM');
 	set_tema('rodape','<p>&copy; 2014 | Todos os direitos reservados para BR');
 	set_tema('template','painel');
-	set_tema('headerinc',load_css(array('foundation/foundation.min')),FALSE);
+	set_tema('headerinc',load_css(array('foundation/foundation.min','style')),FALSE);
+	set_tema('headerinc',load_js(array('foundation.min')),FALSE);
 
 }
 
@@ -83,5 +86,71 @@ function load_css($arquivo=NULL,$pasta='medias/css',$medias='all')
 		
 		}
 		return $retorno;
+	}
+}
+
+// função carrega um ou varios arquivos js, de uma pasta ou remoto
+
+function load_js($arquivo=NULL, $pasta='medias/js', $remoto=FALSE)
+{
+	if ( $arquivo != NULL) 
+	{
+		$CI =& get_instance();
+		$CI->load->helper('url');
+
+		$retorno = '';
+
+		if(is_array($arquivo))
+		{
+			foreach ($arquivo as $js) {
+				if($remoto)
+				{
+					$retorno .= '<script type="text/javascript" src="'.$js.'.js"></script>';	
+				}else{
+					$retorno .= '<script type="text/javascript" src="'.base_url($pasta."/".$js).'.js"></script>';
+				}
+			}
+		}else{
+			if($remoto)
+			{
+				$retorno .= '<script type="text/javascript" src="'.$arquivo.'.js"></script>';	
+			}else{
+				$retorno .= '<script type="text/javascript" src="'.base_url($pasta."/".$arquivo).'.js"></script>';
+			}
+		}
+	}
+	return $retorno;
+}
+
+//mostra erros de validadção em form
+
+function erros_validacao()
+{
+	if(validation_errors()) echo '<div class="alert-box alert">'.validation_errors('<p>','</p>').'</div>';
+}
+
+//verifica se o usuário esta logado no sistema
+
+function user_logout($redir=TRUE)
+{
+	$CI =& get_instance();
+	$CI->load->library('session');
+	$user_status = $CI->session->userdata('user_logado');
+
+	if (!isset($user_status) || $user_status != TRUE) 
+	{
+		$CI->session->sess_destoy();
+		if ($redir) 
+		{
+			redirect('usuarios/login');
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+	else
+	{
+		return TRUE;
 	}
 }
