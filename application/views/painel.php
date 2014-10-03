@@ -26,7 +26,8 @@
 							<ul class="left">
 								<li class="active"><?php echo anchor('painel','Inicio'); ?></li>					
 								<li class="has-dropdown">	
-									<?php echo anchor('usuarios/gerenciar','Usuários'); ?>					
+									<?php //echo anchor('usuarios/gerenciar','Usuários'); ?>	
+									<a href="#">Usuários</a>				
 									<ul class="dropdown">									
 										<li><?php echo anchor('usuarios/cadastrar','Cadastrar'); ?></li>
 										<li><?php echo anchor('usuarios/gerenciar','Gerenciar'); ?></li>								

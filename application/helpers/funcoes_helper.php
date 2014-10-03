@@ -51,7 +51,7 @@ function init_painel()
 	set_tema('rodape','<p>&copy; 2014 | Todos os direitos reservados para BR');
 	set_tema('template','painel');
 	set_tema('headerinc',load_css(array('foundation/foundation.min','style')),FALSE);
-	set_tema('headerinc',load_js(array('foundation.min')),FALSE);
+	set_tema('headerinc',load_js(array('foundation.min','app')),FALSE);
 
 }
 
@@ -130,7 +130,7 @@ function erros_validacao()
 }
 
 //verifica se o usuário esta logado no sistema
-
+//NO FUTURO CORRIGIR ESSA FUNÇÃO, CREATE SESSION PODE DAR PROBLEMAS
 function user_logout($redir=TRUE)
 {
 	$CI =& get_instance();
@@ -139,7 +139,8 @@ function user_logout($redir=TRUE)
 
 	if (!isset($user_status) || $user_status != TRUE) 
 	{
-		$CI->session->sess_destoy();
+		$CI->session->sess_destroy();
+		$CI->session->sess_create();
 		if ($redir) 
 		{
 			redirect('usuarios/login');
@@ -153,4 +154,42 @@ function user_logout($redir=TRUE)
 	{
 		return TRUE;
 	}
+}
+
+//define uma mensagem para ser exibida na próxima tela carregada
+
+function set_msg($id='msgerro', $msg=NULL, $tipo='error')
+{
+	$CI =& get_instance();
+	switch ($tipo) {
+		case 'error':
+			$CI->session->set_flashdata($id,'<div class="alert-box alert"><p>'.$msg.'</p></div>');
+		break;
+		case 'sucess':
+			$CI->session->set_flashdata($id,'<div class="alert-box sucess"><p>'.$msg.'</p></div>');
+		break;
+		
+		default:
+			$CI->session->set_flashdata($id,'<div class="alert-box"><p>'.$msg.'</p></div>');
+		break;
+	}
+}
+
+//verifica se existe uma mensgem para ser exibida na tela atual
+function get_msg($id, $printar=TRUE)
+{	
+	$CI =& get_instance();		
+	if ($CI->session->flashdata($id))
+	{
+
+		if ($printar) {
+			echo $CI->session->flashdata($id);
+			return TRUE;
+		}
+		else
+		{
+			return $CI->session->flashdata($id);
+		}
+	}
+	//return FALSE;
 }
