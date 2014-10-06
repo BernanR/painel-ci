@@ -50,5 +50,6 @@
 			{rodape}
 		</div>
 	</div>
+	{footerinc}
 </body>
 </html>

@@ -24,6 +24,7 @@ class Painel extends CI_Controller {
 		}
 		else
 		{
+			set_msg('errologin','Acesso restrito, faça login antes de prosseguir','error');
 			redirect('usuarios/login');
 		}
 	}

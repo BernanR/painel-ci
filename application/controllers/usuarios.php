@@ -5,7 +5,7 @@ class Usuarios extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();		
-		init_painel();
+		init_painel();		
 	}
 
 	public function index()
@@ -110,7 +110,81 @@ class Usuarios extends CI_Controller {
 		set_tema('rodape','');
 		load_template();
 	}
+
+	public function cadastrar()
+	{
+		user_logout();
+
+		//valida inputs
+		$this->form_validation->set_message('is_unique','Este %s já está cadastrado no sistema');
+		$this->form_validation->set_message('matches','O campo %s está diferente do campo %s');
+
+		$this->form_validation->set_rules('nome','Nome','trim|required|ucwords');
+		$this->form_validation->set_rules('email','Usuário','trim|required|valid_email|is_unique[usuarios.email]|strtolower');
+		$this->form_validation->set_rules('login','Login','trim|required|min_length[4]|is_unique[usuarios.login]|strtolower');
+		$this->form_validation->set_rules('senha','Senha','trim|required|min_length[4]|strtolower');
+		$this->form_validation->set_rules('senha2','Repita a senha','trim|required|min_length[4]|matches[senha]');
+
+		if($this->form_validation->run(TRUE))
+		{
+			$dados = elements(array('nome','email','login'), $this->input->post());
+			$dados['senha'] = md5($this->input->post('senha'));
+			if (stats_user()) $dados['adm'] = ($this->input->post('adm')==1)?1:0;	
+			$this->usuarios->do_insert($dados);		
+		}
+
+		set_tema('titulo','Cadastrar');
+		set_tema('conteudo',load_modulo('usuario','cadastrar'));
+		load_template();
+	}
+
+	public function gerenciar()
+	{	
+		//para exibir esta tela precisa esta logado
+		user_logout();
+		set_tema('footerinc',load_js(array('data-table','table')),FALSE);
+		set_tema('titulo','Gerenciar Usuários');
+		set_tema('conteudo',load_modulo('usuario','gerenciar'));
+		load_template();
+	}
+
+	public function alterar_senha()
+	{
+		//para exibir esta tela precisa esta logado
+		user_logout();
+		$this->form_validation->set_message('matches','O campo %s está diferente do campo %s');
+		$this->form_validation->set_rules('senha','Senha','trim|required|min_length[4]|strtolower');
+		$this->form_validation->set_rules('senha2','Repita a senha','trim|required|min_length[4]|matches[senha]');
+
+		if($this->form_validation->run(TRUE))
+		{				
+			$dados['senha'] = md5($this->input->post('senha'));
+			$this->usuarios->do_update($dados,array('id_usuario'=>$this->input->post('id_usuario')));
+		}
+
+		set_tema('titulo','Alteração de senha');
+		set_tema('conteudo',load_modulo('usuario','alterar_senha'));
+		load_template();		
+	}
+
+	public function editar()
+	{
+		//alterar usuarios
+		user_logout();
+		
+		if($this->form_validation->run(TRUE))
+		{				
+			$dados['senha'] = md5($this->input->post('senha'));
+			$this->usuarios->do_update($dados,array('id_usuario'=>$this->input->post('id_usuario')));
+		}
+
+		set_tema('titulo','Alteração de senha');
+		set_tema('conteudo',load_modulo('usuario','editar'));
+		load_template();		
+	}
 }
+
+
 
 
 

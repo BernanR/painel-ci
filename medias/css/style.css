@@ -1,3 +1,14 @@
 form.login-form{margin-top: 150px;}
 form.login-form .alert-box p{margin: 0;}
-.alert{background: #444!important;border-color: #222!important;}
+.alert{font-size: 14px!important;}
+.espaco{margin-right: 10px;}
+
+/*tabelas*/
+table.data-table{margin-bottom: -2px!important;}
+a.table-actions{width: 22px;height: 22px; display:inline-block;background-position: center center;background-repeat: no-repeat;margin-right: 15px; }
+.table-edit{background: url("../images/sistema/icones/edit-icon.png");}
+.table-pass{background: url("../images/sistema/icones/pass-icon.png");}
+.table-delet{background: url("../images/sistema/icones/trash-icon.png");}
+
+th.sorting_asc{background: url("../images/sistema/icones/img-asc.png") 98% center no-repeat;}
+th.sorting_desc{background: url("../images/sistema/icones/img-desc.png") 98% center no-repeat;}

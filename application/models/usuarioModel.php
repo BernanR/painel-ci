@@ -2,7 +2,16 @@
 
 class usuarioModel extends CI_Model
 {
-	public function do_update($dados=NULL, $condicao=NULL, $redr=TRUE)
+	public function do_insert($dados=NULL, $redir=TRUE)
+	{
+		if ($dados != NULL) 
+		{
+			$this->db->insert('usuarios',$dados);
+			set_msg('msgok','Cadastro efetuado com sucesso','sucess');
+			if($redir) redirect(current_url());
+		}
+	}
+	public function do_update($dados=NULL, $condicao=NULL, $redir=TRUE)
 	{
 		if ($dados != NULL && is_array($condicao))
 		{
@@ -53,6 +62,26 @@ class usuarioModel extends CI_Model
 		if ($email != NULL) 
 		{
 			$this->db->where('email',$email);
+			$this->db->limit(1);
+			return $this->db->get('usuarios');
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	public function get_all()
+	{
+		return $this->db->get('usuarios');
+	}
+
+	public function get_by_id($id=NULL)
+	{
+		
+		if ($id != NULL) 
+		{
+			$this->db->where('id_usuario',$id);
 			$this->db->limit(1);
 			return $this->db->get('usuarios');
 		}

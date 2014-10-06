@@ -51,8 +51,8 @@ function init_painel()
 	set_tema('rodape','<p>&copy; 2014 | Todos os direitos reservados para BR');
 	set_tema('template','painel');
 	set_tema('headerinc',load_css(array('foundation/foundation.min','style')),FALSE);
-	set_tema('headerinc',load_js(array('foundation.min','app')),FALSE);
-
+	set_tema('headerinc',load_js(array('jquery')),FALSE);
+	
 }
 
 //carrega um templates passando o array $tema como parâmetro
@@ -143,6 +143,7 @@ function user_logout($redir=TRUE)
 		$CI->session->sess_create();
 		if ($redir) 
 		{
+			set_msg('errologin','Acesso restrito, faça login antes de prosseguir','error');
 			redirect('usuarios/login');
 		}
 		else
@@ -192,4 +193,18 @@ function get_msg($id, $printar=TRUE)
 		}
 	}
 	//return FALSE;
+}
+
+//verifica se usuario logado é administrador
+function stats_user($set_msg=FALSE)
+{
+	$CI = & get_instance();
+	$user_admin = $CI->session->userdata('user_admin');
+	if (!isset($user_admin) || $user_admin != TRUE)
+	{
+		if($set_msg) set_msg('msgerror','você não tem permissão para executar essa operação','error');
+		return FALSE;
+	}else{
+		return TRUE;
+	}
 }
