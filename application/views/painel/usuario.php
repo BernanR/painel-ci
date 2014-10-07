@@ -37,11 +37,10 @@ switch ($tela) {
 	break;
 
 	case 'cadastrar':
-		?>
-		<div class="small-12 large-12 columns">
-		<?php
-		
-		
+		?>		
+		<p class="breadcrumb"><?php echo breadcrumb(); ?></p>
+		<div class="small-12 large-12 columns">		
+		<?php				
 		echo form_open('usuarios/cadastrar',array('class'=>'custom'));
 		echo form_fieldset('Cadastrar novo usuário');
 
@@ -115,8 +114,8 @@ switch ($tela) {
 
 	break;
 
-	case 'gerenciar':
-	?><br>
+	case 'gerenciar':?>
+
 		<script type="text/javascript">
 			$(function(){
 				$('.deletareg').click(function(){
@@ -124,7 +123,9 @@ switch ($tela) {
 				});
 			})
 		</script>
+		<p class="breadcrumb"><?php echo breadcrumb(); ?></p>
 		<div class="large-12 columns">
+		
 			<?php 
 			get_msg('msgok');
 			get_msg('msgerror'); 
@@ -171,13 +172,14 @@ switch ($tela) {
 			redirect('usuarios/gerenciar');
 		}
 		?>
+		<p class="breadcrumb"><?php echo breadcrumb(); ?></p>
 		<div class="large-12 columns">
 			<?php 
 				if (stats_user(TRUE) || $iduser == $this->session->userdata('user_id'))
 				{
 					$query =  $this->usuarios->get_by_id($iduser)->row();
 
-					echo form_open('',array('class'=>'custom'));
+					echo form_open(current_url(),array('class'=>'custom'));
 					echo form_fieldset('Alterar senha');
 
 					erros_validacao();
@@ -255,13 +257,14 @@ switch ($tela) {
 			redirect('usuarios/gerenciar');
 		}
 		?>
+		<p class="breadcrumb"><?php echo breadcrumb(); ?></p>
 		<div class="large-12 columns">
 			<?php 
 				if (stats_user(TRUE) || $iduser == $this->session->userdata('user_id'))
 				{
 					$query =  $this->usuarios->get_by_id($iduser)->row();
 
-					echo form_open('',array('class'=>'custom'));
+					echo form_open(current_url(),array('class'=>'custom'));
 					echo form_fieldset('Alterar usuarios');
 
 					erros_validacao();

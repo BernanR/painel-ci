@@ -41,7 +41,7 @@
 			</div>		
 		</div>
 	<?php } ?>
-	<div class="row painel-adm">
+	<div class="row painel-adm">		
 		{conteudo}
 	</div>
 	<div class="row rodape">

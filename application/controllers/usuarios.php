@@ -10,7 +10,7 @@ class Usuarios extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('usuarios');
+		$this->gerenciar();
 	}	
 
 	public function login()
@@ -22,6 +22,7 @@ class Usuarios extends CI_Controller {
 		{
 			$usuario = $this->input->post('usuario',TRUE);
 			$senha   = md5($this->input->post('senha',TRUE));
+			$redirect   = $this->input->post('redirect',TRUE);
 			if($this->usuarios->do_login($usuario,$senha) == TRUE)
 			{
 				$query = $this->usuarios->get_by_login($usuario)->row();
@@ -32,7 +33,13 @@ class Usuarios extends CI_Controller {
 						 'user_logado' =>TRUE,
 				);
 				$this->session->set_userdata($dados);
-				redirect('painel');
+				if ($redirect != '') 
+				{
+					redirect($redirect);
+				}else{
+					redirect('painel');
+				}
+				
 			}
 			else
 			{
@@ -171,9 +178,13 @@ class Usuarios extends CI_Controller {
 	{
 		//alterar usuarios
 		user_logout();
+		$this->form_validation->set_message('matches','O campo %s está diferente do campo %s');
+		$this->form_validation->set_rules('senha','Senha','trim|min_length[4]|strtolower');
+		$this->form_validation->set_rules('senha2','Repita a senha','trim|min_length[4]|matches[senha]');
 		
 		if($this->form_validation->run(TRUE))
-		{				
+		{	
+			$dados['nome'] = $this->input->post('nome');
 			$dados['senha'] = md5($this->input->post('senha'));
 			$this->usuarios->do_update($dados,array('id_usuario'=>$this->input->post('id_usuario')));
 		}

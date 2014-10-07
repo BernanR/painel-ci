@@ -127,7 +127,7 @@ function load_js($arquivo=NULL, $pasta='medias/js', $remoto=FALSE)
 
 function erros_validacao()
 {
-	if(validation_errors()) echo '<div class="alert-box alert">'.validation_errors('<p>','</p>').'</div>';
+	if(validation_errors()) echo '<div class="alert-box alert radius">'.validation_errors('<p>','</p>').'</div>';
 }
 
 //verifica se o usuário esta logado no sistema
@@ -144,6 +144,7 @@ function user_logout($redir=TRUE)
 		$CI->session->sess_create();
 		if ($redir) 
 		{
+			$CI->session->set_userdata(array('redir_para'=>current_url()));
 			set_msg('errologin','Acesso restrito, faça login antes de prosseguir','error');
 			redirect('usuarios/login');
 		}
@@ -165,14 +166,14 @@ function set_msg($id='msgerro', $msg=NULL, $tipo='error')
 	$CI =& get_instance();
 	switch ($tipo) {
 		case 'error':
-			$CI->session->set_flashdata($id,'<div class="alert-box alert"><p>'.$msg.'</p></div>');
+			$CI->session->set_flashdata($id,'<div class="large-12 alert-box alert radius"><p>'.$msg.'</p></div>');
 		break;
 		case 'sucess':
-			$CI->session->set_flashdata($id,'<div class="alert-box sucess"><p>'.$msg.'</p></div>');
+			$CI->session->set_flashdata($id,'<div class="large-12 alert-box sucess radius"><p>'.$msg.'</p></div>');
 		break;
 		
 		default:
-			$CI->session->set_flashdata($id,'<div class="alert-box"><p>'.$msg.'</p></div>');
+			$CI->session->set_flashdata($id,'<div class="alert-box radius"><p>'.$msg.'</p></div>');
 		break;
 	}
 }
@@ -208,4 +209,30 @@ function stats_user($set_msg=FALSE)
 	}else{
 		return TRUE;
 	}
+}
+
+//gera um breadcrumb com base no controller atual
+function breadcrumb()
+{
+	$CI = & get_instance();
+	$CI->load->helper('url');
+	$classe = ucfirst($CI->router->class);
+	if($classe == 'Painel')
+	{
+		$classe = anchor($CI->router->class,'Início');
+
+	}else{
+
+		$classe = anchor($CI->router->class,$classe);
+
+	}
+	$metodo = ucwords(str_replace('_',' ',$CI->router->method));
+	if ($metodo && $metodo != 'Index')
+	{
+		$metodo = " &raquo; ".anchor($CI->router->class."/".$CI->router->method,$metodo);
+
+	}else{
+		$metodo = '';
+	}
+	return 'Sua localização: '.anchor('painel','Início').' &raquo; '.$classe.$metodo;
 }

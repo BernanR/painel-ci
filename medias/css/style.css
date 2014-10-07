@@ -1,6 +1,8 @@
 form.login-form{margin-top: 150px;}
-form.login-form .alert-box p{margin: 0;}
-.alert{font-size: 14px!important;}
+div.alert-box p{font-size: 1.1em; margin: 0;}
+div.alert-box.sucess{background: #52b952; border: 1px solid #538753;}
+.breadcrumb{margin: 15px 0;}
+
 .espaco{margin-right: 10px;}
 
 /*tabelas*/
