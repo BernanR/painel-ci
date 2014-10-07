@@ -12,6 +12,7 @@ switch ($tela) {
 		echo form_input(array('name'=>'usuario'), set_value('usuario'),'autofocus');
 		echo form_label('Senha');
 		echo form_password(array('name'=>'senha'), set_value('senha'));
+		echo form_hidden('redirect',$this->session->userdata('redir_para'));
 		echo form_submit(array('name'=>'logar', 'class'=>'button radius right'),'Login');
 		echo "<p>".anchor('usuarios/nova_senha','Esqueci  minha senha').'<p>';
 		echo form_fieldset_close();
@@ -56,9 +57,7 @@ switch ($tela) {
 		        ?>
 		    </div>
 		</div>
-		<?php
-
-		?>
+		
 		<div class="row">
 		    <div class="large-5 columns">		      
 		        <?php 
@@ -67,9 +66,7 @@ switch ($tela) {
 		        ?>
 		    </div>
 		</div>
-		<?php
-
-		?>
+		
 		<div class="row">
 		    <div class="large-4 columns">		      
 		        <?php 
@@ -78,9 +75,7 @@ switch ($tela) {
 		        ?>
 		    </div>
 		</div>
-		<?php
-
-		?>
+		
 		<div class="row">
 		    <div class="large-3 columns">		      
 		        <?php 
@@ -89,9 +84,7 @@ switch ($tela) {
 		        ?>
 		    </div>
 		</div>
-		<?php
-
-		?>
+		
 		<div class="row">
 		    <div class="large-3 columns">		      
 		        <?php 
@@ -100,9 +93,7 @@ switch ($tela) {
 		        ?>
 		    </div>
 		</div>
-		<?php
-
-		?>
+		
 		<div class="row">
 		    <div class="large-12 columns">		      
 		        <?php 
@@ -126,6 +117,13 @@ switch ($tela) {
 
 	case 'gerenciar':
 	?><br>
+		<script type="text/javascript">
+			$(function(){
+				$('.deletareg').click(function(){
+					if(confirm("deseja realmente excluir esse registro?\nEsta operação não poderá ser desfeita!"))return true;else return false;
+				});
+			})
+		</script>
 		<div class="large-12 columns">
 			<?php 
 			get_msg('msgok');
@@ -154,7 +152,7 @@ switch ($tela) {
 						printf('<td class="large-centered">%s</td>',
 						anchor("usuarios/editar/".$data->id_usuario,' ',array('class'=>'table-actions table-edit','title'=>'Editar')).
 						anchor("usuarios/alterar_senha/".$data->id_usuario,' ',array('class'=>'table-actions table-pass','title'=>'Alterar Senha')).
-						anchor("usuarios/excluir/".$data->id_usuario,' ',array('class'=>'table-actions table-delet','title'=>'Excluir')));						
+						anchor("usuarios/excluir/".$data->id_usuario,' ',array('class'=>'table-actions table-delet deletareg','title'=>'Excluir')));						
 						echo "</tr>";
 					}
 					?>
@@ -193,9 +191,7 @@ switch ($tela) {
 					        ?>
 					    </div>
 					</div>
-					<?php
-
-					?>
+					
 					<div class="row">
 					    <div class="large-5 columns">		      
 					        <?php 
@@ -204,9 +200,7 @@ switch ($tela) {
 					        ?>
 					    </div>
 					</div>
-					<?php
-
-					?>
+					
 					<div class="row">
 					    <div class="large-4 columns">		      
 					        <?php 
@@ -215,9 +209,7 @@ switch ($tela) {
 					        ?>
 					    </div>
 					</div>
-					<?php
-
-					?>
+					
 					<div class="row">
 					    <div class="large-3 columns">		      
 					        <?php 
@@ -226,9 +218,7 @@ switch ($tela) {
 					        ?>
 					    </div>
 					</div>
-					<?php
-
-					?>
+					
 					<div class="row">
 					    <div class="large-3 columns">		      
 					        <?php 
@@ -236,15 +226,7 @@ switch ($tela) {
 							echo form_password(array('name'=>'senha2'), set_value('senha2'));
 					        ?>
 					    </div>
-					</div>
-					?>
-					<div class="row">
-					    <div class="large-12 columns">		      
-					        <?php 
-					       	echo form_checkbox(array('name'=>'adm'),'1').' Criar conta de administrador<br><br>';
-					        ?>
-					    </div>
-					</div>
+					</div>	
 					
 					<?php
 					echo form_hidden('id_usuario',$iduser);					

@@ -52,6 +52,7 @@ function init_painel()
 	set_tema('template','painel');
 	set_tema('headerinc',load_css(array('foundation/foundation.min','style')),FALSE);
 	set_tema('headerinc',load_js(array('jquery')),FALSE);
+	set_tema('footerinc',load_js(array('foundation.min')),FALSE);
 	
 }
 

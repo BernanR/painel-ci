@@ -182,6 +182,36 @@ class Usuarios extends CI_Controller {
 		set_tema('conteudo',load_modulo('usuario','editar'));
 		load_template();		
 	}
+
+	public function excluir()
+	{
+		//alterar usuarios
+		user_logout();
+		
+		 if (stats_user(TRUE)) 
+		 {
+		 	$iduser = $this->uri->segment(3);
+		 	if ($iduser != NULL) 
+		 	{
+		 		$query = $this->usuarios->get_by_id($iduser);
+		 		if ($query->num_rows()==1) {
+		 			$query = $query->row();
+		 			if ($query->id_usuario != 1) {
+		 				//exclusão
+		 				$this->usuarios->do_delete(array('id_usuario'=>$query->id_usuario),FALSE);
+		 			}else{
+		 				set_msg('msgerror','Esse usuário não dpode ser exluído','error');
+		 			}
+		 		}else{
+		 			set_msg('msgerror','Usuário não foi encontrado','error');
+		 		}		 			
+		 		
+		 	}else{
+		 		set_msg('msgerror','Escolha um usuário para excluir','error');
+		 	}
+		}
+		redirect('usuarios/gerenciar');		
+	}
 }
 
 
