@@ -31,6 +31,12 @@
 										<li><?php echo anchor('usuarios/cadastrar','Cadastrar'); ?></li>
 										<li><?php echo anchor('usuarios/gerenciar','Gerenciar'); ?></li>								
 									</ul>
+								</li>
+								<li class="has-dropdown">	
+									<?php echo anchor('auditoria/gerenciar','Adiministração'); ?>
+									<ul class="dropdown">									
+										<li><?php echo anchor('auditoria/gerenciar','Auditoria'); ?></li>								
+									</ul>
 								</li>						
 							</ul>
 							<!-- Left Nav Section -->

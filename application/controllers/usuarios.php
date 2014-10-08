@@ -14,7 +14,11 @@ class Usuarios extends CI_Controller {
 	}	
 
 	public function login()
-	{	//carrega o módulo usuários e mostra a tela de login
+	{	//se estiver logado redireciona para o painel
+		//VERIFICAR ESSE CODIGO BLOQUEIA A EXIBIÇÃO DA MENSAGEM
+		//if (user_logout(FALSE)) redirect('painel');
+
+		//carrega o módulo usuários e mostra a tela de login
 		$this->form_validation->set_rules('usuario','USUÁRIO','trim|required|min_length[4]|strtolower');
 		$this->form_validation->set_rules('senha','SENHA','trim|required|min_length[4]|strtolower');
 		
@@ -33,12 +37,18 @@ class Usuarios extends CI_Controller {
 						 'user_logado' =>TRUE,
 				);
 				$this->session->set_userdata($dados);
+
+				//cria auditoria no banco de dados
+				auditoria('Login no sistema','Login efetuado com sucesso');
+
 				if ($redirect != '') 
 				{
 					redirect($redirect);
 				}else{
 					redirect('painel');
 				}
+
+				
 				
 			}
 			else
@@ -71,11 +81,15 @@ class Usuarios extends CI_Controller {
 	}
 	//NO FUTURO CORRIGIR ESSA FUNÇÃO, CREATE SESSION PODE DAR PROBLEMAS
 	public function logoff()
-	{
+	{	
+		//cria auditoria no banco de dados
+		auditoria('Logoff no sistema','Logoff efetuado com sucesso'.FALSE);
+
 		$this->session->unset_userdata(array('user_id'=>'','user_nome'=>'','user_logado'=>''));
 		$this->session->sess_destroy();
 		$this->session->sess_create();
 		set_msg('logoffok','Logoff efetuado com sucesso','sucess');
+		
 		redirect('usuarios/login');
 	}
 
@@ -97,7 +111,10 @@ class Usuarios extends CI_Controller {
 					$dados['senha'] = md5($novasenha);
 					$this->usuarios->do_update($dados,array('email'=>$email),FALSE);
 					
+					//cria auditoria no banco de dados
+					auditoria('Solicitação de senha','O usuário solicitou uma nova senha'.FALSE);
 					set_msg('msgok','Uma nova senha foi enviada para seu email','sucess');
+					
 					redirect('usuarios/nova_senha');
 				}
 				else
@@ -178,14 +195,12 @@ class Usuarios extends CI_Controller {
 	{
 		//alterar usuarios
 		user_logout();
-		$this->form_validation->set_message('matches','O campo %s está diferente do campo %s');
-		$this->form_validation->set_rules('senha','Senha','trim|min_length[4]|strtolower');
-		$this->form_validation->set_rules('senha2','Repita a senha','trim|min_length[4]|matches[senha]');
-		
+		$this->form_validation->set_rules('nome','Nome','trim|required|ucwords');
 		if($this->form_validation->run(TRUE))
 		{	
 			$dados['nome'] = $this->input->post('nome');
-			$dados['senha'] = md5($this->input->post('senha'));
+			$dados['ativo'] = ($this->input->post('ativo')==1?1:0);
+			if (stats_user()) $dados['adm'] = ($this->input->post('adm')==1)?1:0;
 			$this->usuarios->do_update($dados,array('id_usuario'=>$this->input->post('id_usuario')));
 		}
 

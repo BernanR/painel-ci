@@ -278,9 +278,7 @@ switch ($tela) {
 					        ?>
 					    </div>
 					</div>
-					<?php
-
-					?>
+					
 					<div class="row">
 					    <div class="large-5 columns">		      
 					        <?php 
@@ -289,9 +287,7 @@ switch ($tela) {
 					        ?>
 					    </div>
 					</div>
-					<?php
-
-					?>
+					
 					<div class="row">
 					    <div class="large-4 columns">		      
 					        <?php 
@@ -300,28 +296,23 @@ switch ($tela) {
 					        ?>
 					    </div>
 					</div>
-					<?php
 
-					?>
 					<div class="row">
-					    <div class="large-3 columns">		      
+					    <div class="large-12 columns">		      
 					        <?php 
-					        echo form_label('Senha');
-							echo form_password(array('name'=>'senha'), set_value('senha'),'autofocus');
+					       	echo form_checkbox(array('name'=>'ativo'),'1',($query->ativo==1)? TRUE:FALSE).' Permitir o acesso deste usuário ao sistema<br><br>';
 					        ?>
 					    </div>
 					</div>
-					<?php
 
-					?>
 					<div class="row">
-					    <div class="large-3 columns">		      
+					    <div class="large-12 columns">		      
 					        <?php 
-					        echo form_label('Repita a senha');
-							echo form_password(array('name'=>'senha2'), set_value('senha2'));
+					       	echo form_checkbox(array('name'=>'adm'),'1',($query->adm==1)?TRUE:FALSE).' Tornar essa conta de administrador<br><br>';
 					        ?>
 					    </div>
 					</div>
+					
 					<?php
 					echo form_hidden('id_usuario',$iduser);					
 					
