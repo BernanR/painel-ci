@@ -14,3 +14,6 @@ a.table-actions{width: 22px;height: 22px; display:inline-block;background-positi
 
 th.sorting_asc{background: url("../images/sistema/icones/img-asc.png") 98% center no-repeat;}
 th.sorting_desc{background: url("../images/sistema/icones/img-desc.png") 98% center no-repeat;}
+
+/*inputs*/
+input[type="file"]{font-size: 14px;padding: 6px; background: #7D7D7D; border: 1px solid #ccc; border-radius: 6px;}
