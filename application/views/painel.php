@@ -41,8 +41,8 @@
 								<li class="has-dropdown">	
 									<?php echo anchor('midia/gerenciar','Midia'); ?>
 									<ul class="dropdown">									
-										<li><?php echo anchor('midia/cadastrar','Cadastrar'); ?></li>
-										<li><?php echo anchor('midia/gerenciar','Gerenciar'); ?></li>								
+										<li><?php echo anchor('midias/cadastrar','Cadastrar'); ?></li>
+										<li><?php echo anchor('midias/gerenciar','Gerenciar'); ?></li>								
 									</ul>
 								</li>						
 							</ul>

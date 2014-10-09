@@ -11,6 +11,7 @@ a.table-actions{width: 22px;height: 22px; display:inline-block;background-positi
 .table-edit{background: url("../images/sistema/icones/edit-icon.png");}
 .table-pass{background: url("../images/sistema/icones/pass-icon.png");}
 .table-delet{background: url("../images/sistema/icones/trash-icon.png");}
+.table-view{background: url("../images/sistema/icones/lupa.png"); background-size:100%;}
 
 th.sorting_asc{background: url("../images/sistema/icones/img-asc.png") 98% center no-repeat;}
 th.sorting_desc{background: url("../images/sistema/icones/img-desc.png") 98% center no-repeat;}

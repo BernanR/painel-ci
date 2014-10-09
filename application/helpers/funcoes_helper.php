@@ -267,3 +267,38 @@ function auditoria($operacao,$observacao,$query=TRUE)
 	);
 	$CI->auditoria->do_insert($dados,FALSE);
 }
+
+//gera uma thumb de uma image
+function thumb($imagem=NULL,$width=100,$height=75,$geratag=TRUE)
+{	
+
+	$CI =& get_instance();
+	$CI->load->helper('file');
+	$caminho = './medias/images/uploads/thumbs/';
+	$thumb = $height.'x'.$width.'_'.$imagem;
+	$thumbinfo = get_file_info($caminho.$thumb);
+
+	if($thumbinfo!=FALSE)
+	{
+		$retorno = base_url($caminho.$thumb);
+
+	}else{
+		$CI->load->library('image_lib');
+		$config['image_library'] = 'gd2';
+		$config['source_image'] = './medias/images/uploads/'.$imagem;
+		$config['new_image'] = $caminho.$thumb;
+		$config['maintain_ratio'] = TRUE;
+		$config['width'] = $width;
+		$config['height'] = $height;
+		$CI->image_lib->initialize($config);
+		if ($CI->image_lib->resize()) 
+		{
+			$CI->image_lib->clear();
+			$retorno = base_url($caminho.$thumb);
+		}else{
+			$retorno =FALSE;
+		}		
+	}
+	if($geratag && $retorno != FALSE)$retorno = '<img src="'.$retorno.'" alt="">';
+	return $retorno;
+}

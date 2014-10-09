@@ -10,16 +10,54 @@ class midiaModel extends CI_Model
 			if ($this->db->affected_rows()>0)
 			{	
 				auditoria('Inclusão de mídia','Nova mídia cadastrada no sistema');
-				set_msg('msgok','Cadastro efetuado com sucesso','sucess');
+				set_msg('msgok','Imagem cadastrada com sucesso','sucess');
 			}else{
 				set_msg('msgok','Ocorreu um erro ao tentar inserir registro','error');
 			}
 			if($redir) redirect(current_url());
 		}
 	}
-	public function do_upload($ampo)
+
+	public function do_update($dados=NULL, $condicao=NULL, $redir=TRUE)
 	{
-		$config['upload_path'] = './meidas/images/uploads/';
+		if ($dados != NULL && is_array($condicao))
+		{
+			$this->db->update('midias',$dados,$condicao);
+			if ($this->db->affected_rows()>0)
+			{	
+				auditoria('Alteração de mídia', 'A mídia com o id "'.$condicao['id'].'" foi alterada');
+				set_msg('msgok','Alteração efetuada com sucesso','sucess');
+			}else{
+				set_msg('msgok','Ocorreu um erro ao tentar alterar registro','error');
+			}			
+			if($redir) redirect(current_url());
+		}
+	}
+
+	public function do_delete($condicao=NULL,$redir=TRUE)
+	{
+		
+		if ($condicao != NULL && is_array($condicao)) 
+		{
+			$this->db->delete('midias',$condicao);
+			if ($this->db->affected_rows()>0)
+			{
+				auditoria('Exclusão de mídia', 'A mídia com o id "'.$condicao['id'].'" foi excluída');
+				set_msg('msgok','Registro excluído com sucesso','sucess');
+			}else{
+				set_msg('msgok','Erro ao excluir registro','error');
+			}
+			if ($redir) redirect(current_url());
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	public function do_upload($campo)
+	{
+		$config['upload_path'] = './medias/images/uploads/';
 		$config['allowed_types'] = 'gif|jpg|png';
 		$this->load->library('upload',$config);
 		if ($this->upload->do_upload($campo)) 
@@ -30,9 +68,8 @@ class midiaModel extends CI_Model
 		}
 	}
 	
-	public function get_all($limit=0)
-	{	
-		if ($limit > 0) $this->db->limit($limit);		
+	public function get_all()
+	{			
 		return $this->db->get('midias');
 	}
 
