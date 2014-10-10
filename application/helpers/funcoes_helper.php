@@ -55,9 +55,16 @@ function init_painel()
 	set_tema('footerinc',load_js(array('foundation.min')),FALSE);
 	
 }
+//carrega o ckeditor para textearea
+function init_editorhtml()
+{
+	set_tema('footerinc', load_js(base_url('medias/library/ckeditor/ckeditor'), NULL, TRUE),FALSE);
+	set_tema('footerinc', load_js(base_url('medias/library/ckeditor/sample'), NULL, TRUE),FALSE);
+	set_tema('footerinc', load_js(base_url('medias/js/init_ckeditor'), NULL, TRUE),FALSE);
+}
+
 
 //carrega um templates passando o array $tema como parâmetro
-
 function load_template()
 {
 	$CI =& get_instance();

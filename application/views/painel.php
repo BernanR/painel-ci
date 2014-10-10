@@ -44,6 +44,13 @@
 										<li><?php echo anchor('midias/cadastrar','Cadastrar'); ?></li>
 										<li><?php echo anchor('midias/gerenciar','Gerenciar'); ?></li>								
 									</ul>
+								</li>
+								<li class="has-dropdown">	
+									<?php echo anchor('paginas/gerenciar','Páginas'); ?>
+									<ul class="dropdown">									
+										<li><?php echo anchor('paginas/cadastrar','Cadastrar'); ?></li>
+										<li><?php echo anchor('paginas/gerenciar','Gerenciar'); ?></li>								
+									</ul>
 								</li>						
 							</ul>
 							<!-- Left Nav Section -->

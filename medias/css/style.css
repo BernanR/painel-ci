@@ -18,3 +18,5 @@ th.sorting_desc{background: url("../images/sistema/icones/img-desc.png") 98% cen
 
 /*inputs*/
 input[type="file"]{font-size: 14px;padding: 6px; background: #7D7D7D; border: 1px solid #ccc; border-radius: 6px;}
+
+#cke_html-editor{margin-bottom: 25px;}
