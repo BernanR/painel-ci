@@ -91,6 +91,28 @@ class Midias extends CI_Controller {
 		}
 		redirect('midias/gerenciar');		
 	}
+
+	public function get_imgs()
+	{
+		header('Contant-Type: aplication/x-json; charset=utf-8');
+		$this->db->like('nome',$this->input->post('pesquisarimg'));
+		if ($this->input->post('pesquisarimg')=='') $this->db->limit(10);
+		$this->db->order_by('id_midia','DESC');
+		$query =  $this->midias->get_all();
+		$retorno = 'Nenhum resultado encontrado com base em sua pesquisa';
+		if($query->num_rows()>0)
+		{
+			$retorno = '';
+			$query = $query->result();
+			foreach ($query as $data) 
+			{
+				$retorno .= '<a class="th" role="button" href="javascript:void(0)" onClick="alert(\'Hello World!\')">';
+				$retorno .= '<img src="'.thumb($data->arquivo,250,130,FALSE).'" class="retornoimg" alt="'.$data->nome.'" title="Clique aqui para inserir"/>'; 
+				$retorno .= '</a>';
+			}
+			echo $retorno;
+		}
+	}
 }
 
 /* End of file midia.php */

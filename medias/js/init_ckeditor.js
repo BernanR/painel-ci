@@ -13,6 +13,8 @@ CKEDITOR.replace( 'html-editor', {
  		{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },			// Group's name will be used to create voice label.														
  		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
  		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+ 		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+ 		{ name: 'insert' },
  		{ name: 'links' },
  		{ name: 'styles' },
 		{ name: 'colors' },

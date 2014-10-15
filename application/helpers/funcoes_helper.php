@@ -15,6 +15,17 @@ function load_modulo($modulo=NULL, $tela=NULL, $diretorio='painel')
 	}
 }
 
+function incluir_arquivo($view, $pasta='painel/includes/',$echo=TRUE)
+{
+	$CI =& get_instance();
+	if ($echo==TRUE) 
+	{
+		echo $CI->load->view($pasta.$view,'',TRUE);
+		return TRUE;
+	}
+	return $CI->load->$view($pasta.$view,'',TRUE);
+}
+
 //seta valores ao array $tema da classe sistema
 function set_tema($prop,$valor,$replace=TRUE)
 {
@@ -308,4 +319,42 @@ function thumb($imagem=NULL,$width=100,$height=75,$geratag=TRUE)
 	}
 	if($geratag && $retorno != FALSE)$retorno = '<img src="'.$retorno.'" alt="">';
 	return $retorno;
+}
+
+function slug($string=NULL)
+{
+ 	$string = remove_acento($string);
+ 	return url_title($string,'-',TRUE);
+}
+
+function remove_acento($string=NULL)
+{
+	$string = preg_replace("/[ÁÀÂÃÄáàâãä]/", "a", $string);
+    $string = preg_replace("/[ÉÈÊéèê]/", "e", $string);
+    $string = preg_replace("/[ÍÌíì]/", "i", $string);
+    $string = preg_replace("/[ÓÒÔÕÖóòôõö]/", "o", $string);
+    $string = preg_replace("/[ÚÙÜúùü]/", "u", $string);
+    $string = preg_replace("/Çç/", "c", $string);
+    $string = preg_replace("/[][><}{)(:;,!?*%~^`&#@]/", "", $string);
+    $string = strtolower($string);
+    return $string;
+}
+
+function resumo($string=NULL,$palavras=50,$decodifica_html=TRUE,$remove_tags=TRUE)
+{
+	if ($string!=NULL) 
+	{
+		if ($decodifica_html) $string = to_html($string);
+		if ($remove_tags) $string = strip_tags($string);
+		$retorno = word_limiter($string,$palavras);
+	}else{
+		$retorno = FALSE;
+	}
+	return $retorno;
+}
+
+function to_html($string=NULL)
+{
+	return html_entity_decode($string);
+
 }
