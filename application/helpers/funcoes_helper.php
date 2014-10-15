@@ -358,3 +358,45 @@ function to_html($string=NULL)
 	return html_entity_decode($string);
 
 }
+
+//salva ou atualiza uma config no db
+function set_setting($nome, $valor='')
+{
+	$CI =& get_instance();
+	$CI->load->model('settings_model','settings');
+	if ($CI->settings->get_by_nome($nome)->num_rows() == 1)
+	{
+		if (trim($valor) == '') 
+		{
+			$CI->settings->do_delete(array('nome_config'=>$nome),FALSE);
+		}else{
+			$dados = array(
+				'nome_config' => $nome,
+				'valor_config' =>$valor
+			);
+			$CI->settings->do_update($dados,array('nome_config'=>$nome),FALSE);
+		}
+	}else{
+		$dados = array(
+			'nome_config' => $nome,
+			'valor_config' =>$valor
+		);
+		$CI->settings->do_insert($dados,FALSE);
+	}
+}
+
+//retorno uma config do db
+function get_setting($nome)
+{
+	$CI =& get_instance();
+	$CI->load->model('settings_model','settings');
+	$setting = $CI->settings->get_by_nome($nome);
+	if ($setting->num_rows()==1) 
+	{
+		$setting = $setting->row();
+		return $setting->valor_config;
+	}else{
+		return NULL;
+	}
+	return $setting->valor_config;
+}

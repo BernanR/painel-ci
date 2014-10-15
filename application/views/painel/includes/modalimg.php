@@ -27,7 +27,7 @@
 		});
 	});
 
-	
+
 </script>
 
 <div id="myModal" class="reveal-modal xlarge" data-reveal>
@@ -46,3 +46,14 @@
 	<div id="retorno">&nbsp;</div>
 	<a class="close-reveal-modal">&#215;</a>
 </div>
+
+<script type="text/javascript">
+	
+
+
+	Var parser = new CKEDITOR.htmlParser();
+parser.onTagOpen = function( tagName, attributes, selfClosing ) {
+    alert( tagName );
+};
+parser.parse( '<p>Some <b>text</b>.</p>' ); // Alerts 'p', 'b'.
+</script>

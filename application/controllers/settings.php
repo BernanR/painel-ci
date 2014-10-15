@@ -7,7 +7,7 @@ class Settings extends CI_Controller {
 		parent::__construct();		
 		init_painel();
 		user_logout();
-		$this->load->model('midiaModel','midias');
+		$this->load->model('settingsModel','settings');
 	}
 
 	public function index()
@@ -15,37 +15,27 @@ class Settings extends CI_Controller {
 		$this->gerenciar();
 	}
 
-	public function cadastrar()
-	{	
-		$this->form_validation->set_rules('nome','Nome','trim|required|ucfirst|');
-		$this->form_validation->set_rules('descricao','Descrição','trim');
-		
-		if($this->form_validation->run(TRUE))
-		{	
-			$upload = $this->midias->do_upload('arquivo');
-			if (is_array($upload) && $upload['file_name'] != '') 
-			{
-				$dados = elements(array('nome','descricao'), $this->input->post());
-				$dados['arquivo'] = $upload['file_name'];
-				$this->midias->do_insert($dados);
-			}else{
-				set_msg('msgerror',$upload,'error');
-				redirect(current_url());
-			}					
-		}
-		set_tema('titulo','Upload de imagens');
-		set_tema('conteudo', load_modulo('midia','cadastrar'));
-		load_template();
-		
-	}
-
 	public function gerenciar()
-	{
+	{	
+		if($this->input->post('cadastrar'))
+		{
+			if (stats_user(TRUE)) 
+			{			
+				$settings = elements(array('nome_site','url_logomarca','email_adm'),$this->input->post());
+				foreach($settings as $nome_config => $valor_config)
+				{
+					set_setting($nome_config, $valor_config);
+				}
+				set_msg('msgok','Configurações atualizadas com sucesso','');
+				redirect('settings/gerenciar');
+			}else{
+				redirect('settings/gerenciar');
+			}
+		}
 		set_tema('footerinc',load_js(array('data-table','table')),FALSE);
-		set_tema('titulo','Registros de Midia');
-		set_tema('conteudo', load_modulo('auditoria','gerenciar'));
-		load_template();
-		
+		set_tema('titulo','Configurações do sistema');
+		set_tema('conteudo', load_modulo('settings','gerenciar'));
+		load_template();		
 	}
 }
 
