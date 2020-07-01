@@ -1,4 +1,5 @@
 PainelCI
 ========
 
-Painel de administração de conteudo - CodeIgniter - Foundation
+Painel de administração de conteúdo - CodeIgniter - Foundation.
+
