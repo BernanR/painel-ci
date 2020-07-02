@@ -9,7 +9,7 @@ Project is created with:
 * CodeIgniter 
 * Foundation
 
-Aqui esta um exemplo de algumas funções criadas que pode ajudar e acelerar em muito no desenvolvimento de um novo projeto.
+Aqui esta um exemplo de algumas funções criadas que pode te ajudar no desenvolvimento de um novo projeto.
 
 Através da função set_tema(), você pode adicionar qualquer coisa na view.
 Essa função recebe 3 parâmetros, são eles: o id que será referenciada na view, por exemplo "conteudo" onde você deve referênciar na view da seguinte forma: {conteudo}.
