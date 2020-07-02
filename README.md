@@ -12,9 +12,9 @@ Project is created with:
 Aqui esta um exemplo de algumas funções criadas que pode te ajudar no desenvolvimento de um novo projeto.
 
 Através da função set_tema(), você pode adicionar qualquer coisa na view.
-Essa função recebe 3 parâmetros, são eles: o id que será referenciada na view, por exemplo "conteudo" onde você deve referênciar na view da seguinte forma: {conteudo}.
-Em segundo, temos o código htm, texto ou uma chamada js, css por exemplo.
-E em terceiro temos um parametro bollean onde será informado se esse dados será empilhado ou não, caso informe false, será ignorado todos chamdas refernciada anteriormente para o id.
+Essa função recebe 3 parâmetros, são eles: o id que é do tipo string e deve ser referenciada na view, por exemplo "conteudo" e onde você deve referênciar na view da seguinte forma: {conteudo}.
+Em segundo temos o código htm, texto ou uma chamada js, css por exemplo.
+E em terceiro temos um parâmetro do bollean onde será informado se esse dados será empilhado ou não, caso informe false, será ignorado todos chamdas refernciada anteriormente para o id.
 Um exemplo simples de como referenciar essa função no controle:
 ```
 public function inicio()
