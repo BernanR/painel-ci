@@ -43,6 +43,6 @@ public function inicio()
 </body>
 </html>
 ```
-Dai você poderá referenciar varios outros ids para sua view, bastando apenas criar os ids no html como por exemplo: {{headerinc}} que poerá receber todas as chamadas css, assim como {{footerinc}} para os js.
+Dai você poderá referenciar varios outros ids para sua view, tendo em vista que é necessário adicionar os ids no html como por exemplo: {{headerinc}} que poerá receber todas as chamadas css, assim como {{footerinc}} para os js.
 
 caso tenha alguma dúvida, esse é meu e-mail: alves.bernan@gmail.com
