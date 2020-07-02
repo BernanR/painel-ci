@@ -19,13 +19,13 @@ Um exemplo simples de como referenciar essa função no controle:
 ```
 public function inicio()
 {
-			set_tema('titulo','HOME');
-			set_tema('conteudo','<h1>Olá Mundo</h1>',FALSE);
-			load_template();
+	set_tema('titulo','HOME');
+	set_tema('conteudo','<h1>Olá Mundo</h1>',FALSE);
+	load_template();
 		
 }
 ```
-  Note que na primeira linha é adicionado um titulo para a página. E a função load_template(); ficará encarregada de carregar as alterações.
+  Note que na primeira linha é adicionado um titulo para a página. E a função load_template(); ficará responsável por carregar as alterações feitas anteriomente.
   E na view ficaria da seguinte forma:
 
 ```
@@ -33,8 +33,8 @@ public function inicio()
 <html lang="pt-br">
 <head>
 	<meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php if(isset($titulo)): ?> {titulo} | <?php endif; ?> {titulo_padrao}</title>
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    	<title><?php if(isset($titulo)): ?> {titulo} | <?php endif; ?> {titulo_padrao}</title>
 </head>
 <body>
 	<div class="row painel-adm">		
